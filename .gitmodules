@@ -7,5 +7,5 @@
 	url = https://github.com/maxsteeel/proton-12
 [submodule "KernelSU-Next"]
 	path = KernelSU-Next
-	url = https://github.com/SukiSU-Ultra/SukiSU-Ultra.git
-	branch = builtin
+	url = https://github.com/ReSukiSU/ReSukiSU.git
+	branch = main
