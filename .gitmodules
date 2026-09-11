@@ -5,7 +5,7 @@
 [submodule "toolchain"]
 	path = toolchain
 	url = https://github.com/maxsteeel/proton-12
-[submodule "KernelSU-Next"]
-	path = KernelSU-Next
+[submodule "ReSukiSU"]
+	path = ReSukiSU
 	url = https://github.com/ReSukiSU/ReSukiSU.git
 	branch = main
