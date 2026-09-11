@@ -5636,12 +5636,12 @@ CONFIG_TRUSTY_TUI=m
 # end of Trusty
 
 #
-# KernelSU
+# SukiSU
 #
 CONFIG_KSU=y
 # CONFIG_KSU_DEBUG is not set
-CONFIG_KSU_MANUAL_HOOK=y
-# end of KernelSU
+CONFIG_KPM=y
+# end of SukiSU
 # end of Device Drivers
 
 #
