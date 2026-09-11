@@ -24,7 +24,7 @@ jobs:
             rm -rf .git/modules/KernelSU-Next
           fi
 
-          git submodule add -b main https://github.com/SukiSU-Ultra/SukiSU-Ultra.git KernelSU-Next
+          git submodule add -b nongki https://github.com/SukiSU-Ultra/SukiSU-Ultra.git KernelSU-Next
 
       - name: Commit submodule swap
         run: |
