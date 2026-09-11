@@ -1,0 +1,30 @@
+name: Update KernelSU-Next submodule
+
+on:
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Pin submodule to v3.2.0-legacy tag
+        run: |
+          cd KernelSU-Next
+          git remote add upstream https://github.com/KernelSU-Next/KernelSU-Next.git || true
+          git fetch upstream --tags
+          git checkout v3.2.0-legacy
+          cd ..
+
+      - name: Commit submodule update
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add KernelSU-Next
+          git commit -m "Pin KernelSU-Next submodule to v3.2.0-legacy tag" || echo "No changes to commit"
+          git push
