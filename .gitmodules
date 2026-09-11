@@ -4,7 +4,7 @@
 
 [submodule "toolchain"]
 	path = toolchain
-	url = https://github.com/maxsteeel/proton-12
+	url = https://github.com/kyros70/proton-12
 [submodule "ReSukiSU"]
 	path = ReSukiSU
 	url = https://github.com/ReSukiSU/ReSukiSU.git
