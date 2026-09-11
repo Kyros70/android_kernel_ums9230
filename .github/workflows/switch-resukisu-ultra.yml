@@ -1,33 +1,50 @@
-name: Switch to ReSukiSU
+name: Rename ReSukiSU submodule
 
 on:
   workflow_dispatch:
 
 jobs:
-  update:
+  rename:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
           submodules: recursive
+          fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Swap submodule to ReSukiSU
+      - name: Configure git
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "Kyros70"
+          git config user.email "Kyros70@users.noreply.github.com"
 
-          if [ -d "KernelSU-Next" ]; then
-            git submodule deinit -f KernelSU-Next
-            git rm -f KernelSU-Next
-            rm -rf .git/modules/KernelSU-Next
-          fi
-
-          git submodule add -b main https://github.com/ReSukiSU/ReSukiSU.git KernelSU-Next
-
-      - name: Commit submodule swap
+      - name: Rename submodule
         run: |
-          git add .gitmodules KernelSU-Next
-          git commit -m "Switch KernelSU-Next submodule to ReSukiSU" || echo "No changes to commit"
+          set -e
+          sed -i 's/KernelSU-Next/ReSukiSU/' .gitmodules
+          git add .gitmodules
+          git mv KernelSU-Next ReSukiSU
+          mv .git/modules/KernelSU-Next .git/modules/ReSukiSU
+          git config -f .git/config --rename-section submodule.KernelSU-Next submodule.ReSukiSU
+          echo "gitdir: ../.git/modules/ReSukiSU" > ReSukiSU/.git
+          git config -f .git/modules/ReSukiSU/config core.worktree ../../../ReSukiSU
+          git submodule sync
+
+      - name: Repoint symlink
+        run: |
+          rm drivers/kernelsu
+          ln -s ../ReSukiSU/kernel drivers/kernelsu
+
+      - name: Verify before commit
+        run: |
+          git -C ReSukiSU status
+          ls -la drivers/kernelsu
+          git status
+
+      - name: Commit and push
+        run: |
+          git add -A
+          git commit -m "Rename KernelSU-Next submodule to ReSukiSU"
           git push
+          
